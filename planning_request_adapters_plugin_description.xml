@@ -1,0 +1,8 @@
+<library path="lib/libtotg_planning_adapter">
+  <class name="totg_planning_adapter/AddTOTG" 
+    type="totg_planning_adapter::AddTOTG" 
+    base_class_type="planning_request_adapter::PlanningRequestAdapter">
+    <description>
+    </description>
+  </class>
+</library>
