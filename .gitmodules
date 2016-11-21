@@ -1,3 +1,4 @@
 [submodule "external/trajectories"]
 	path = external/trajectories
 	url = https://github.com/tobiaskunz/trajectories.git
+	branch = master
