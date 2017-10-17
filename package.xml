@@ -4,11 +4,9 @@
   <version>0.0.1</version>
   <description>Wrapper for Time-Optimal Trajectory Generation</description>
 
-  <maintainer email="ruben.burger@gmail.com">Ruben Burger</maintainer>
+  <maintainer email="r.b.burger@tudelft.nl">Ruben Burger</maintainer>
 
   <license>BSD</license>
-
-  <author email="ruben.burger@gmail.com">Ruben Burger</author>
 
   <buildtool_depend>catkin</buildtool_depend>
 
@@ -33,6 +31,5 @@
   <export>  
     <moveit_core plugin="${prefix}/planning_request_adapters_plugin_description.xml"/> 
   </export>
-
 
 </package>
