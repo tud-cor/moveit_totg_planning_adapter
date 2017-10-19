@@ -1,8 +1,8 @@
-<library path="lib/libtotg_planning_adapter">
-  <class name="totg_planning_adapter/AddTOTG" 
-    type="totg_planning_adapter::AddTOTG" 
+<library path="lib/libmoveit_totg_planning_request_adapter">
+  <class name="totg_planning_adapter/AddTOTG" type="totg_planning_adapter::AddTOTG" 
     base_class_type="planning_request_adapter::PlanningRequestAdapter">
     <description>
+      MoveIt planning adapter wrapping the Time-Optimal Trajectory Generation for Path Following with Bounded Acceleration and Velocity algorithm by Tobias Kunz and Mike Stilman.
     </description>
   </class>
 </library>

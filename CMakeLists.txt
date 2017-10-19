@@ -1,62 +1,51 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(moveit_totg)
-
-# C++ 11
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall ${CMAKE_CXX_FLAGS}")
+project(moveit_totg_planning_request_adapter)
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rosbag
-  roslint
-  rosparam_shortcuts
-  cmake_modules
-  moveit_msgs
+  moveit_core
   moveit_ros_planning
-  joint_trajectory_controller
+  pluginlib
+  roscpp
 )
 
-find_package(Boost REQUIRED)
+find_package(Eigen3 QUIET)
+if(NOT EIGEN3_FOUND)
+  # Fallback to cmake_modules
+  find_package(cmake_modules REQUIRED)
+  find_package(Eigen REQUIRED)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
+  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})
+else()
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
+
+# enable C++11 if needed for MoveIt on Kinetic
+if ("${moveit_core_VERSION}" VERSION_GREATER "0.9.0")
+  add_definitions(-std=c++11)
+endif()
 
 catkin_package(
   CATKIN_DEPENDS
-    roscpp
-    rosparam_shortcuts
+    moveit_core
     moveit_ros_planning
+    pluginlib
+    roscpp
   DEPENDS
-    # Eigen
-  INCLUDE_DIRS
-    # include
-    external
+    EIGEN3
   LIBRARIES
-    totg_planning_adapter
+    ${PROJECT_NAME}
 )
 
-###########
-## Build ##
-###########
+include_directories(external ${catkin_INCLUDE_DIRS})
 
-include_directories(
-  # include
-  external
-  ${catkin_INCLUDE_DIRS}
-)
-
-# --------------------------------------------
-# TOTG planning adapter
-add_library(totg_planning_adapter
-  src/add_totg.cpp
+add_library(${PROJECT_NAME}
   external/trajectories/Path.cpp
   external/trajectories/Trajectory.cpp
+  src/add_totg.cpp
 )
-target_link_libraries(totg_planning_adapter
-  ${catkin_LIBRARIES}
-)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
-# Mark adapter for installation
-install(TARGETS totg_planning_adapter
+install(TARGETS ${PROJECT_NAME}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
-
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 install(FILES planning_request_adapters_plugin_description.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
